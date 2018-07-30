@@ -1,4 +1,5 @@
 #!/usr/bin/python -tt
+# -*- coding: utf-8 -*-
 # Copyright 2010 Google Inc.
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -45,7 +46,46 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
-###
+def print_words(filename):
+  word_count = {}
+
+  file = open(filename, "r")
+  for line in file:
+    word_list = line.split(" ")
+    for word in word_list:
+      word = word.lower().strip('\n')
+      if word not in word_count.keys():
+        word_count[word] = 1
+      else:
+        word_count[word] += 1
+
+  for key, value in word_count.iteritems():
+    print key, value
+
+def print_top(filename):
+
+  word_count = {}
+
+  file = open(filename, "r")
+  for line in file:
+    word_list = line.split(" ")
+    for word in word_list:
+      word = word.lower().strip('\n')
+      if word not in word_count.keys():
+        word_count[word] = 1
+      else:
+        word_count[word] += 1
+
+  new_dict = sorted(word_count.items(), key=lambda x: x[1], reverse=True)
+
+  if len(word_count) < 20:
+    for i in range(len(word_count)):
+      print new_dict[i]
+  else:
+    for i in range(20):
+      print new_dict[i]
+
+    
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
